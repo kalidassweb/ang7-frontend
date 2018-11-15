@@ -1,0 +1,132 @@
+<div class="container-fluid">
+  <div class="container">
+    <div class="row">
+      <div class="table-responsive c">
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <td>
+                <form (ngSubmit)="crawlSite()">
+                  <input
+                    id="fname"
+                    name="fname"
+                    [(ngModel)]="url"
+                    required="required"
+                    type="text"
+                    placeholder="  Enter the Page URL"
+                    required
+                    pattern="https?://.+"
+                    style="width: 80%;
+          height: 37px;
+          "
+                  />
+
+                  <button type="submit" class="btn btn-primary btn-xs pull-right" style="width: 19%;">Crawl</button>
+                </form>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="">
+      <table class="table table-striped  custab">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Site Link</th>
+            <th>Crawl At</th>
+            <th>Furured Image</th>
+            <th class="text-center">Action</th>
+          </tr>
+        </thead>
+        <tr *ngFor="let item of data; let i = index">
+          <td class="text">{{ i + 1 }}</td>
+          <td class="text">
+            <a href="{{item.website_link}}"> {{ item.website_link }} </a>
+          </td>
+          <td class="text">{{ item.modified_on | date }}</td>
+          <td><img [src]="item.top_image" class="img" /></td>
+          <td class="text-center text"><button class="btn btn-info btn-xs" (click)="toggle(item)">View</button></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div
+  id="myModal"
+  class="modal "
+  role="dialog"
+  style="display:none;
+background: rgba(119, 115, 115, 0.12156862745098039
+"
+>
+  <div class="modal-dialog modal-lg">
+    <!-- Modal content -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Site Info</h4>
+        <button type="button" class="close" data-dismiss="modal" (click)="toggle()">&times;</button>
+      </div>
+      <div
+        class="modal-body"
+        style="    max-height: 500px;
+      overflow-y: scroll;
+      overflow-x: hidden;
+  "
+      >
+        <div class="pad">
+          <h5>Link :</h5>
+          <a href="{{dataToModal.website_link}}"> {{ dataToModal.website_link }} </a>
+        </div>
+
+        <ng-container *ngIf="dataToModal.top_image">
+          <div class="pad">
+            <h5>Image :</h5>
+            <img [src]="dataToModal.top_image" class="img1" /> <br />
+          </div>
+        </ng-container>
+
+        <div class="pad">
+          <h5>Title:</h5>
+          {{ dataToModal.meta_title }}
+        </div>
+
+        <div class="pad">
+          <h5>Desc:</h5>
+          {{ dataToModal.meta_desc }}
+        </div>
+
+        <div class="pad">
+          <h5>Meta Keywords:</h5>
+          {{ dataToModal.meta_keywords }}
+        </div>
+
+        <div class="pad">
+          <h5>Content Keywords:</h5>
+          {{ dataToModal.content_keywords }}
+        </div>
+
+        <div class="pad">
+          <h5>Content Summary:</h5>
+          {{ dataToModal.content_summary }}
+        </div>
+
+        <div class="pad">
+          <h5>Content:</h5>
+          {{ dataToModal.content }}
+        </div>
+
+        <div class="pad">
+          <h5>Href Links:</h5>
+          <code> {{ dataToModal.links }} </code>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
